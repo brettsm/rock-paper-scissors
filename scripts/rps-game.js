@@ -19,7 +19,6 @@ function getUserChoice() {
 }
 
 function getComputerChoice() {
-    console.log('in here');
     let x = Math.floor((Math.random() * 3));
     if(x === 0) return 'ROCK';
     else if(x === 1) return 'PAPER';
@@ -27,7 +26,8 @@ function getComputerChoice() {
 }
 
 function chooseWinner(user, computer) {
-    console.log('choosing winner');
+    console.log('User: ' + user);
+    console.log('Computer: ' + computer);
     if(user === 'ROCK') {
         if(computer === 'ROCK') {
             return 'TIE';
@@ -59,7 +59,7 @@ function game(answer) {
     if(answer.toUpperCase() === 'YES') {
         let userChoice = getUserChoice();
         let winner;
-        while(answer.toUpperCase() === 'yes') {
+        while(answer.toUpperCase() === 'YES') {
             if(userChoice === null) {
                 console.log("Try to enter another value");
             } else {
