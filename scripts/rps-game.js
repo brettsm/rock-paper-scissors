@@ -3,20 +3,6 @@
 //Author: Brett Smith    
 //TODO: Improve with a table
 //      Add GUI            
-                
-                //Pseudocode
-                //Get user choice
-                //Get computer choice
-                //case statement for which one won
-
-function getUserChoice() {
-    let choice = prompt("Enter a choice (rock, paper, or scissors)");
-    if(choice.toUpperCase() !== 'ROCK' && choice.toUpperCase() !== 'PAPER' && choice.toUpperCase() !== 'SCISSORS') {
-        console.log(choice + ' is not a valid choice!');
-        return null;
-    }
-    return choice.toUpperCase();
-}
 
 function getComputerChoice() {
     let x = Math.floor((Math.random() * 3));
@@ -24,6 +10,8 @@ function getComputerChoice() {
     else if(x === 1) return 'PAPER';
     else return 'SCISSORS';
 }
+
+
 
 function chooseWinner(user, computer) {
     console.log('User: ' + user);
@@ -44,7 +32,7 @@ function chooseWinner(user, computer) {
         } else {    //scissors
             return 'COMPUTER';
         }
-    } else { //scissors
+    } else {        //scissors
         if(computer === 'ROCK') {
             return 'COMPUTER';
         } else if(computer === 'PAPER') {
@@ -55,28 +43,49 @@ function chooseWinner(user, computer) {
     }
 }
 
-function game(answer) {
-    if(answer.toUpperCase() === 'YES') {
-        let userChoice = getUserChoice();
-        let winner;
-        while(answer.toUpperCase() === 'YES') {
-            if(userChoice === null) {
-                console.log("Try to enter another value");
-            } else {
-                winner = chooseWinner(userChoice, getComputerChoice());
-                if(winner === 'TIE') {
-                    console.log("There was a tie, go again");
-                } else {
-                    console.log(winner + " won!");
-                    answer = prompt("Would you like to play again? (yes, no)");
-                }
-            }
-            userChoice = getUserChoice();
-        }
+let userScore = 0;
+let computerScore = 0;
+
+function game(userChoice) {
+    let winner = chooseWinner(userChoice, getComputerChoice());
+    if(winner === 'TIE') {
+        alert("There was a tie, go again");
     } else {
-        console.log('Stop being a scaredy cat. Refresh the page NOW!');
+        if(winner === 'COMPUTER') {
+            computerScore++;
+        } else {
+            userScore++;
+        }
+        updateScoreBoard();
     }
+    if(userScore === 5) {
+        alert('YOU WON!');
+        userScore = 0;
+        computerScore = 0;
+        updateScoreBoard();
+    } else if(computerScore === 5) {
+        alert('COMPUTER WON :(');
+        userScore = 0;
+        computerScore = 0;
+        updateScoreBoard();
+    }
+
 }
 
-game(prompt('Would you like to play a game of Rock Paper Scissors?').toUpperCase());
+function updateScoreBoard() {
+    document.getElementById('user-score').textContent = `User: ${userScore}`;
+    document.getElementById('computer-score').textContent = `Computer: ${computerScore}`;
+}
+
+let resultDisplay = document.querySelector('.result-display');
+let rockButton = document.getElementById('rock-button');
+let paperButton = document.getElementById('paper-button');
+let scissorsButton = document.getElementById('scissors-button');
+
+rockButton.addEventListener('click', () => game('ROCK'));
+paperButton.addEventListener('click', () => game('PAPER'));
+scissorsButton.addEventListener('click', () => game('SCISSORS'));
+
+updateScoreBoard(); //initialize
+
 
